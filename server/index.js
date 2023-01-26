@@ -10,6 +10,7 @@ import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url"
 import { register } from "./controllers/auth.js"
+import authRoutes from "./routes/auth.js"
 
 // Configs
 const __filename = fileURLToPath(import.meta.url)
@@ -38,6 +39,8 @@ const upload = multer({ storage });
 
 //Routes
 app.post('/auth/register', upload.single("picture"), register);
+
+app.use("/auth", authRoutes);
 
 // Database setup
 const PORT = process.env.PORT || 6001;
