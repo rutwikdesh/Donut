@@ -9,6 +9,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url"
+import { register } from "./controllers/auth.js"
 
 // Configs
 const __filename = fileURLToPath(import.meta.url)
@@ -35,6 +36,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+//Routes
+app.post('/auth/register', upload.single("picture"), register);
+
 // Database setup
 const PORT = process.env.PORT || 6001;
 mongoose.set('strictQuery', true);
@@ -45,4 +49,4 @@ mongoose.connect(
     console.log("MongoDB connected");
   }
 );
-app.listen(PORT, ()=>console.log("Listening!"));
+app.listen(PORT, () => console.log("Listening!"));
