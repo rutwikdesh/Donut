@@ -32,7 +32,6 @@ export const getUserFriends = async (req, res) => {
   }
 }
 
-
 // Update
 export const addRemoveFriend = async (req, res) => {
   try {
