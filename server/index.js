@@ -57,7 +57,7 @@ app.use("/posts", postRoutes);
 const PORT = process.env.PORT || 6001;
 mongoose.set('strictQuery', true);
 mongoose.connect(
-  process.env.MONGO_URI,
+  process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("MongoDB connected");
