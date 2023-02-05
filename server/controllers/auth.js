@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import User from "../models/User.js"
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 // Register User
 export const register = async (req, res) => {
@@ -31,34 +31,27 @@ export const register = async (req, res) => {
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
     });
-
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
-//Login User
+// Logging In
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    //check if user exists in our db
     const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "User does not exist." });
+    if (!user) return res.status(400).json({ msg: "User does not exist. " });
 
-    //match user entered password with the encrypted password stored in our db
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) return res.status(400).json({ msg: "Invalid Credentials." });
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
 
-    //create a signed jwt token
-    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
-
-    //delete the password sent by the user, so that it doesn't get sent in response
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     delete user.password;
-    res.status(200).json({token, user});
+    res.status(200).json({ token, user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};

@@ -1,4 +1,3 @@
-import { response } from "express";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 
@@ -6,7 +5,7 @@ import User from "../models/User.js";
 export const createPost = async (req, res) => {
   try {
     const { userId, description, picturePath } = req.body;
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     const newPost = new Post({
       userId,
       firstName: user.firstName,
@@ -18,18 +17,14 @@ export const createPost = async (req, res) => {
       likes: {},
       comments: [],
     });
-
-    // save the post to mongodb
     await newPost.save();
 
-    // grab all the fresh posts from the database and send it to frontend
     const post = await Post.find();
     res.status(201).json(post);
-
   } catch (err) {
     res.status(409).json({ message: err.message });
   }
-}
+};
 
 // Read
 export const getFeedPosts = async (req, res) => {
@@ -39,7 +34,7 @@ export const getFeedPosts = async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
-}
+};
 
 export const getUserPosts = async (req, res) => {
   try {
@@ -51,7 +46,7 @@ export const getUserPosts = async (req, res) => {
   }
 };
 
-/* UPDATE */
+// Update
 export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,4 +71,3 @@ export const likePost = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
-

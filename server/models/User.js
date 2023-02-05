@@ -1,14 +1,14 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: true,
       min: 2,
       max: 50,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: true,
       min: 2,
@@ -17,13 +17,13 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      max: 60,
+      max: 50,
       unique: true,
     },
     password: {
       type: String,
       required: true,
-      min: 6,
+      min: 5,
     },
     picturePath: {
       type: String,
@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema(
     impressions: Number,
   },
   { timestamps: true }
-)
+);
 
 const User = mongoose.model("User", UserSchema);
 export default User;

@@ -1,19 +1,37 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import Form from "./form";
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   return (
-    <Box>
+    <Box
+      height="100vh"
+      width="100%"
+      backgroundColor="rgb(190, 234, 255)"
+      overflow="auto"
+    >
       <Box
         width="100%"
-        backgroundColor={theme.palette.background.alt}
         p="1.5rem 10%"
         textAlign="center"
       >
-        <Typography fontWeight="bold" fontSize="36px" color="primary">
+        <Typography fontWeight="bold" fontSize="36px" color="rgb(229, 0, 99)">
           Donut
         </Typography>
+      </Box>
+
+      <Box
+        width={isNonMobileScreens ? "50%" : "93%"}
+        p="2rem"
+        m="2rem auto"
+        borderRadius="1.5rem"
+        backgroundColor="rgb(244, 247, 210)"
+      >
+        <Typography fontWeight="500" variant="h5" p="1rem" color="grey">
+          Welcome to Donut, your social Space!
+        </Typography>
+        <Form />
       </Box>
     </Box>
   );

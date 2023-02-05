@@ -1,22 +1,18 @@
 import mongoose from "mongoose";
 
-const PostSchema = mongoose.Schema(
+const postSchema = mongoose.Schema(
   {
     userId: {
       type: String,
       required: true,
     },
-    firstname: {
+    firstName: {
       type: String,
       required: true,
-      min: 2,
-      max: 50,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: true,
-      min: 2,
-      max: 50,
     },
     location: String,
     description: String,
@@ -34,6 +30,6 @@ const PostSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.model("Post", PostSchema);
+const Post = mongoose.model("Post", postSchema);
 
 export default Post;
