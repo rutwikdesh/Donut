@@ -43,21 +43,28 @@ const Navbar = () => {
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
-      <FlexBetween gap="1.75rem">
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="maroon"
-          onClick={() => navigate("/home")}
-          sx={{
-            "&:hover": {
-              color: primaryLight,
-              cursor: "pointer",
-            },
-          }}
-        >
-          Donut
-        </Typography>
+      <FlexBetween gap="4.75rem">
+        <FlexBetween gap="0.2rem">
+          <Typography
+            fontWeight="bold"
+            fontSize="clamp(1rem, 2rem, 2.25rem)"
+            color="green"
+            onClick={() => navigate("/home")}
+            sx={{
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              },
+            }}
+          >
+            Donut
+          </Typography>
+          <img
+            width="40rem"
+            height="40rem"
+            src="../../assets/donut.png"
+          />
+        </FlexBetween>
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}

@@ -1,24 +1,49 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import FlexBetween from "components/FlexBetween";
 import Form from "./form";
+import BgImg from "../../images/background.png"
+
+const styles = {
+  paperContainer: {
+    backgroundSize: 'cover',
+    backgroundImage: `url(${BgImg})`,
+    backgroundPosition: 'center',
+    width: `100vw`,
+    height: `100vh`,
+  }
+};
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+
   return (
     <Box
       height="100vh"
       width="100%"
       backgroundColor="rgb(190, 234, 255)"
       overflow="auto"
+      style={styles.paperContainer}
     >
       <Box
         width="100%"
         p="1.5rem 10%"
         textAlign="center"
       >
-        <Typography fontWeight="bold" fontSize="36px" color="rgb(229, 0, 99)">
-          Donut
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}>
+          <Typography fontWeight="bold" fontSize="36px" color="green" marginRight="0.3rem">
+            Donut
+          </Typography>
+          <img
+            width="45rem"
+            height="45rem"
+            src="../../assets/donut.png"
+          />
+        </Box>
       </Box>
 
       <Box

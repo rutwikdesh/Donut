@@ -159,7 +159,7 @@ const MyPostWidget = ({ picturePath }) => {
           onClick={handlePost}
           sx={{
             color: "white",
-            backgroundColor: "maroon",
+            backgroundColor: "green",
             borderRadius: "3rem",
           }}
         >
