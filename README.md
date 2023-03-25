@@ -12,6 +12,6 @@ The website was crafted using the latest MERN stack technologies for overall dev
 - Hosting: Cyclic
 
 ### How to Login to the Website:
-Use the below credentials to login - 
+Use the below credentials to login
 Email - garret@rode.com
 Password - garret@123
