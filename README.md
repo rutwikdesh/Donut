@@ -13,5 +13,5 @@ The website was crafted using the latest MERN stack technologies for overall dev
 
 ### How to Login to the Website:
 Use the below credentials to login
-Email - garret@rode.com
-Password - garret@123
+- Email - garret@rode.com
+- Password - garret@123
