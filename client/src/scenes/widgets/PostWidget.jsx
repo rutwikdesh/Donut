@@ -12,7 +12,18 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
 
-const PostWidget = ({ postId, postUserId, name, description, location, picturePath, userPicturePath, likes, comments }) => {
+const PostWidget = ({
+  postId,
+  postUserId,
+  name,
+  description,
+  location,
+  picturePath,
+  audioPath,
+  userPicturePath,
+  likes,
+  comments,
+}) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -57,6 +68,21 @@ const PostWidget = ({ postId, postUserId, name, description, location, picturePa
           src={`http://localhost:3001/assets/${picturePath}`}
         />
       )}
+      {audioPath && (
+        <Box mt="4px">
+          <Typography sx={{ color: main, mt: "4px", mb: "4px" }}>
+            {audioPath.substring(0, audioPath.length - 4)}
+          </Typography>
+          <audio controls autoplay>
+            <source
+              src={`http://localhost:3001/assets/${audioPath}`}
+              type="audio/mp3"
+            />
+            Your browser does not support the audio element.
+          </audio>
+        </Box>
+      )}
+
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">

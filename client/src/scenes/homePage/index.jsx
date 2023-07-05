@@ -40,7 +40,7 @@ const HomePage = () => {
         )}
       </Box>
     </Box>
-  )
+  );
 };
 
 export default HomePage;
