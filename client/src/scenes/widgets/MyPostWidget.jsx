@@ -28,7 +28,10 @@ import { setPosts } from "state";
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
+  const [isAudio, setIsAudio] = useState(false);
+  const [isGif, setIsGif] = useState(false);
   const [image, setImage] = useState(null);
+  const [audio, setAudio] = useState(null);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
@@ -44,16 +47,27 @@ const MyPostWidget = ({ picturePath }) => {
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
+      const response = await fetch(`http://localhost:3001/posts/picture`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const posts = await response.json();
+      dispatch(setPosts({ posts }));
+    } else if (audio) {
+      formData.append("audio", audio);
+      formData.append("audioPath", audio.name);
+      const response = await fetch(`http://localhost:3001/posts/audio`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const posts = await response.json();
+      dispatch(setPosts({ posts }));
     }
 
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
     setImage(null);
+    setAudio(null);
     setPost("");
   };
 
@@ -96,7 +110,7 @@ const MyPostWidget = ({ picturePath }) => {
                 >
                   <input {...getInputProps()} />
                   {!image ? (
-                    <p>Add Image Here</p>
+                    <p>Add {!isGif ? "Image" : "GIF"} Here</p>
                   ) : (
                     <FlexBetween>
                       <Typography>{image.name}</Typography>
@@ -118,10 +132,61 @@ const MyPostWidget = ({ picturePath }) => {
         </Box>
       )}
 
+      {isAudio && (
+        <Box
+          border={`1px solid ${medium}`}
+          borderRadius="5px"
+          mt="1rem"
+          p="1rem"
+        >
+          <Dropzone
+            acceptedFiles=".mp3"
+            multiple={false}
+            onDrop={(acceptedFiles) => setAudio(acceptedFiles[0])}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <FlexBetween>
+                <Box
+                  {...getRootProps()}
+                  border={`2px dashed grey`}
+                  p="1rem"
+                  width="100%"
+                  sx={{ "&:hover": { cursor: "pointer" } }}
+                >
+                  <input {...getInputProps()} />
+                  {!audio ? (
+                    <p>Add Audio Here</p>
+                  ) : (
+                    <FlexBetween>
+                      <Typography>{audio.name}</Typography>
+                      <EditOutlined />
+                    </FlexBetween>
+                  )}
+                </Box>
+                {audio && (
+                  <IconButton
+                    onClick={() => setAudio(null)}
+                    sx={{ width: "15%" }}
+                  >
+                    <DeleteOutlined />
+                  </IconButton>
+                )}
+              </FlexBetween>
+            )}
+          </Dropzone>
+        </Box>
+      )}
+
       <Divider sx={{ margin: "1.25rem 0" }} />
 
       <FlexBetween>
-        <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
+        <FlexBetween
+          gap="0.25rem"
+          onClick={() => {
+            setIsImage(!isImage);
+            setIsAudio(false);
+          }}
+        >
           <ImageOutlined sx={{ cursor: "pointer", color: mediumMain }} />
           <Typography
             color={mediumMain}
@@ -131,21 +196,44 @@ const MyPostWidget = ({ picturePath }) => {
           </Typography>
         </FlexBetween>
 
+        <FlexBetween
+          gap="0.25rem"
+          onClick={() => {
+            setIsAudio(!isAudio);
+            setIsImage(false);
+          }}
+        >
+          <MicOutlined sx={{ cursor: "pointer", color: mediumMain }} />
+          <Typography
+            color={mediumMain}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+          >
+            Audio
+          </Typography>
+        </FlexBetween>
+
+        <FlexBetween
+          gap="0.25rem"
+          onClick={() => {
+            setIsImage(!isImage);
+            setIsAudio(false);
+            setIsGif(!isGif);
+          }}
+        >
+          <GifBoxOutlined sx={{ cursor: "pointer", color: mediumMain }} />
+          <Typography
+            color={mediumMain}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+          >
+            Clip
+          </Typography>
+        </FlexBetween>
+
         {isNonMobileScreens ? (
           <>
             <FlexBetween gap="0.25rem">
-              <GifBoxOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Clip</Typography>
-            </FlexBetween>
-
-            <FlexBetween gap="0.25rem">
               <AttachFileOutlined sx={{ color: mediumMain }} />
               <Typography color={mediumMain}>Attachment</Typography>
-            </FlexBetween>
-
-            <FlexBetween gap="0.25rem">
-              <MicOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Audio</Typography>
             </FlexBetween>
           </>
         ) : (
