@@ -1,20 +1,18 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import FlexBetween from "components/FlexBetween";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Form from "./form";
-import BgImg from "../../images/background.png"
+import BgImg from "../../images/background.jpg";
 
 const styles = {
   paperContainer: {
-    backgroundSize: 'cover',
+    backgroundSize: "cover",
     backgroundImage: `url(${BgImg})`,
-    backgroundPosition: 'center',
+    backgroundPosition: "center",
     width: `100vw`,
     height: `100vh`,
-  }
+  },
 };
 
 const LoginPage = () => {
-  const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   return (
@@ -25,21 +23,24 @@ const LoginPage = () => {
       overflow="auto"
       style={styles.paperContainer}
     >
-      <Box
-        width="100%"
-        p="1.5rem 10%"
-        textAlign="center"
-      >
+      <Box width="100%" p="1.5rem 10%" textAlign="center">
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
-          }}>
-          <Typography fontWeight="bold" fontSize="36px" color="green" marginRight="0.3rem">
+          }}
+        >
+          <Typography
+            fontWeight="bold"
+            fontSize="36px"
+            color="green"
+            marginRight="0.3rem"
+          >
             Donut
           </Typography>
           <img
             width="45rem"
+            alt="logo"
             height="45rem"
             src="../../assets/donut.png"
           />
