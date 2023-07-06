@@ -180,11 +180,17 @@ const MyPostWidget = ({ picturePath }) => {
       <Divider sx={{ margin: "1.25rem 0" }} />
 
       <FlexBetween>
+        {/* Image Selector */}
         <FlexBetween
           gap="0.25rem"
           onClick={() => {
-            setIsImage(!isImage);
+            if (isGif === true) {
+              setIsImage(true);
+            } else {
+              setIsImage(!isImage);
+            }
             setIsAudio(false);
+            setIsGif(false);
           }}
         >
           <ImageOutlined sx={{ cursor: "pointer", color: mediumMain }} />
@@ -196,6 +202,7 @@ const MyPostWidget = ({ picturePath }) => {
           </Typography>
         </FlexBetween>
 
+        {/* Audio Selector */}
         <FlexBetween
           gap="0.25rem"
           onClick={() => {
@@ -212,12 +219,13 @@ const MyPostWidget = ({ picturePath }) => {
           </Typography>
         </FlexBetween>
 
+        {/* Gif Selector */}
         <FlexBetween
           gap="0.25rem"
           onClick={() => {
             setIsImage(!isImage);
             setIsAudio(false);
-            setIsGif(!isGif);
+            setIsGif(true);
           }}
         >
           <GifBoxOutlined sx={{ cursor: "pointer", color: mediumMain }} />
@@ -229,7 +237,7 @@ const MyPostWidget = ({ picturePath }) => {
           </Typography>
         </FlexBetween>
 
-        {isNonMobileScreens ? (
+        {/* {isNonMobileScreens ? (
           <>
             <FlexBetween gap="0.25rem">
               <AttachFileOutlined sx={{ color: mediumMain }} />
@@ -240,7 +248,7 @@ const MyPostWidget = ({ picturePath }) => {
           <FlexBetween gap="0.25rem">
             <MoreHorizOutlined sx={{ color: mediumMain }} />
           </FlexBetween>
-        )}
+        )} */}
 
         <Button
           disabled={!post}

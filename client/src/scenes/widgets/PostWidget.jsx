@@ -4,7 +4,15 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  useTheme,
+  Grid,
+} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -70,10 +78,20 @@ const PostWidget = ({
       )}
       {audioPath && (
         <Box mt="4px">
-          <Typography sx={{ color: main, mt: "4px", mb: "4px" }}>
-            {audioPath.substring(0, audioPath.length - 4)}
-          </Typography>
-          <audio controls autoplay>
+          <Grid container direction="row" alignItems="center">
+            <Grid item>
+              <AudiotrackIcon />
+            </Grid>
+            <Grid item>
+              <Typography
+                sx={{ color: main, mt: "4px", mb: "4px", fontSize: "1rem" }}
+              >
+                {audioPath.substring(0, audioPath.length - 4)}
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <audio controls>
             <source
               src={`http://localhost:3001/assets/${audioPath}`}
               type="audio/mp3"

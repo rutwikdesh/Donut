@@ -25,7 +25,7 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
-const Navbar = () => {
+const Navbar = ({ setSearchQuery }) => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +40,11 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  const filterBySearch = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+  };
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -59,11 +64,7 @@ const Navbar = () => {
           >
             Donut
           </Typography>
-          <img
-            width="40rem"
-            height="40rem"
-            src="../../assets/donut.png"
-          />
+          <img width="40rem" height="40rem" src="../../assets/donut.png" />
         </FlexBetween>
         {isNonMobileScreens && (
           <FlexBetween
@@ -72,7 +73,7 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
+            <InputBase placeholder="Search..." onChange={filterBySearch} />
             <IconButton>
               <Search />
             </IconButton>
