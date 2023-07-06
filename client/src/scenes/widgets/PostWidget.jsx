@@ -12,6 +12,7 @@ import {
   Typography,
   useTheme,
   Grid,
+  InputBase,
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
@@ -19,6 +20,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
+import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const PostWidget = ({
   postId,
@@ -33,11 +36,14 @@ const PostWidget = ({
   comments,
 }) => {
   const [isComments, setIsComments] = useState(false);
+  const [isAddComment, setIsAddComment] = useState(false);
+  const [comment, setComment] = useState(null);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  const commentCount = Object.keys(comments).length;
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -54,6 +60,25 @@ const PostWidget = ({
     });
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
+  };
+
+  const addComment = async () => {
+    if (comment != "" && comment != null) {
+      const response = await fetch(
+        `http://localhost:3001/posts/${postId}/comment`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: loggedInUserId, comment: comment }),
+        }
+      );
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+      setComment(null);
+    }
   };
 
   return (
@@ -115,10 +140,21 @@ const PostWidget = ({
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">
-            <IconButton onClick={() => setIsComments(!isComments)}>
+            <IconButton
+              onClick={() => {
+                setIsComments(!isComments);
+                setIsAddComment(false);
+              }}
+            >
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{comments.length}</Typography>
+            <Typography>{commentCount}</Typography>
+            {isComments && (
+              <AddCircleOutlineSharpIcon
+                sx={{ marginLeft: "1rem", "&:hover": { cursor: "pointer" } }}
+                onClick={() => setIsAddComment(!isAddComment)}
+              />
+            )}
           </FlexBetween>
         </FlexBetween>
 
@@ -126,6 +162,37 @@ const PostWidget = ({
           <ShareOutlined />
         </IconButton>
       </FlexBetween>
+      {isAddComment && (
+        <Box mt="0.5rem">
+          <Divider />
+          <Typography
+            sx={{
+              color: main,
+              m: "0.5rem 0",
+              pl: "1rem",
+            }}
+          >
+            <Box alignItems="center" display="flex">
+              <InputBase
+                placeholder="Comment here..."
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <CheckCircleIcon
+                onClick={() => {
+                  addComment();
+                  setIsAddComment(false);
+                }}
+                sx={{
+                  "&:hover": { cursor: "pointer" },
+                  alignContent: "center",
+                  mt: "2px",
+                }}
+              />
+            </Box>
+          </Typography>
+        </Box>
+      )}
+
       {isComments && (
         <Box mt="0.5rem">
           {comments.map((comment, i) => (
