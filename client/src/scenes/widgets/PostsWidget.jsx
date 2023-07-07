@@ -45,15 +45,22 @@ const PostsWidget = ({ userId, isProfile = false, searchQuery }) => {
 
       for (var i = 0; i < updatedPosts.length; i++) {
         if (
-          updatedPosts[i].description.toLowerCase().indexOf(searchQuery) !==
-            -1 ||
-          updatedPosts[i].firstName.toLowerCase().indexOf(searchQuery) !== -1 ||
-          updatedPosts[i].lastName.toLowerCase().indexOf(searchQuery) !== -1
+          updatedPosts[i].description
+            .toLowerCase()
+            .indexOf(searchQuery.toLowerCase()) !== -1 ||
+          updatedPosts[i].firstName
+            .toLowerCase()
+            .indexOf(searchQuery.toLowerCase()) !== -1 ||
+          updatedPosts[i].lastName
+            .toLowerCase()
+            .indexOf(searchQuery.toLowerCase()) !== -1
         ) {
           filteredPostsNew.push(updatedPosts[i]);
         } else if (updatedPosts[i].audioPath) {
           if (
-            updatedPosts[i].audioPath.toLowerCase().indexOf(searchQuery) !== -1
+            updatedPosts[i].audioPath
+              .toLowerCase()
+              .indexOf(searchQuery.toLowerCase()) !== -1
           ) {
             filteredPostsNew.push(updatedPosts[i]);
           }
