@@ -107,6 +107,13 @@ const Form = () => {
       onSubmit={handleFormSubmit}
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
       validationSchema={isLogin ? loginSchema : registerSchema}
+      validate={(values) => {
+        let errors = {};
+        if (values.password.length < 5) {
+          errors.password = "The password should be atleast 5 characters long";
+        }
+        return errors;
+      }}
     >
       {({
         values,
