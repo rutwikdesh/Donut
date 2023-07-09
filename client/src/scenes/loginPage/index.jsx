@@ -1,6 +1,7 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Form from "./form";
 import BgImg from "../../images/background.jpg";
+import { useState } from "react";
 
 const styles = {
   paperContainer: {
@@ -14,6 +15,7 @@ const styles = {
 
 const LoginPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const [loginError, setLoginError] = useState(null);
 
   return (
     <Box
@@ -57,7 +59,8 @@ const LoginPage = () => {
         <Typography fontWeight="500" variant="h5" p="1rem" color="grey">
           Welcome to Donut, your social Space!
         </Typography>
-        <Form />
+        <Form setLoginError={setLoginError} />
+        {loginError && <Typography>loginError</Typography>}
       </Box>
     </Box>
   );
